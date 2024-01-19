@@ -127,3 +127,17 @@ trace.graphqls
 修改页面上展示的位置：skywalking-ui/src/views/dashboard/related/trace/components/D3Graph/SpanDetail.vue
 
 ![image-20240119171630519](./assets/image-20240119171630519.png)
+
+适配之后的效果展示
+
+前端登录用户是admin、访问地址：http://10.100.0.180/prod-api/backstage/reward_points/get_reward_record?pageNum=1&pageSize=10
+
+![image-20240119172224844](./assets/image-20240119172224844.png)
+
+SkywalkingUI展示：
+
+![image-20240119172404987](./assets/image-20240119172404987.png)
+
+新增字段
+
+![image-20240119172424305](./assets/image-20240119172424305.png)
