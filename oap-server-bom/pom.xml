@@ -66,6 +66,7 @@
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <flatbuffers-java.version>1.12.0</flatbuffers-java.version>
         <postgresql.version>42.4.1</postgresql.version>
+        <mysql.version>8.0.33</mysql.version>
         <jetcd.version>0.5.3</jetcd.version>
         <testcontainers.version>1.17.6</testcontainers.version>
         <armeria.version>1.24.3</armeria.version>
@@ -523,6 +524,11 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
             </dependency>
 
             <dependency>

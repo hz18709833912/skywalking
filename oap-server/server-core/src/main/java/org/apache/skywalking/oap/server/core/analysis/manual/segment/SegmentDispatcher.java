@@ -38,6 +38,7 @@ public class SegmentDispatcher implements SourceDispatcher<Segment> {
         segment.setIsError(source.getIsError());
         segment.setDataBinary(source.getDataBinary());
         segment.setTimeBucket(source.getTimeBucket());
+        segment.setLwqCustomUser(source.getLwqCustomUser());
         segment.setTags(Tag.Util.toStringList(source.getTags()));
 
         RecordStreamProcessor.getInstance().in(segment);

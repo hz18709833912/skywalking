@@ -20,6 +20,7 @@ package org.apache.skywalking.oap.server.core.analysis.manual.segment;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.oap.server.core.analysis.Stream;
 import org.apache.skywalking.oap.server.core.analysis.manual.searchtag.Tag;
 import org.apache.skywalking.oap.server.core.analysis.record.Record;
@@ -43,6 +44,7 @@ import static org.apache.skywalking.oap.server.core.analysis.record.Record.TIME_
 @Stream(name = SegmentRecord.INDEX_NAME, scopeId = DefaultScopeDefine.SEGMENT, builder = SegmentRecord.Builder.class, processor = RecordStreamProcessor.class)
 @SQLDatabase.ExtraColumn4AdditionalEntity(additionalTable = SegmentRecord.ADDITIONAL_TAG_TABLE, parentColumn = TIME_BUCKET)
 @BanyanDB.TimestampColumn(SegmentRecord.START_TIME)
+@Slf4j
 public class SegmentRecord extends Record {
 
     public static final String INDEX_NAME = "segment";
@@ -57,6 +59,7 @@ public class SegmentRecord extends Record {
     public static final String IS_ERROR = "is_error";
     public static final String DATA_BINARY = "data_binary";
     public static final String TAGS = "tags";
+    public static final String LWQ_CUSTOM_USER = "lwq_custom_user";
 
     @Setter
     @Getter
@@ -106,6 +109,11 @@ public class SegmentRecord extends Record {
     @SQLDatabase.AdditionalEntity(additionalTables = {ADDITIONAL_TAG_TABLE})
     private List<String> tags;
 
+    @Setter
+    @Getter
+    @Column(name = LWQ_CUSTOM_USER)
+    private String lwqCustomUser;
+
     @Override
     public StorageID id() {
         return new StorageID().append(SEGMENT_ID, segmentId);
@@ -125,6 +133,7 @@ public class SegmentRecord extends Record {
             record.setIsError(((Number) converter.get(IS_ERROR)).intValue());
             record.setTimeBucket(((Number) converter.get(TIME_BUCKET)).longValue());
             record.setDataBinary(converter.getBytes(DATA_BINARY));
+            record.setLwqCustomUser((String) converter.get(LWQ_CUSTOM_USER));
             // Don't read the tags as they have been in the data binary already.
             return record;
         }
@@ -141,6 +150,7 @@ public class SegmentRecord extends Record {
             converter.accept(IS_ERROR, storageData.getIsError());
             converter.accept(TIME_BUCKET, storageData.getTimeBucket());
             converter.accept(DATA_BINARY, storageData.getDataBinary());
+            converter.accept(LWQ_CUSTOM_USER, storageData.getLwqCustomUser());
             converter.accept(TAGS, storageData.getTags());
         }
     }

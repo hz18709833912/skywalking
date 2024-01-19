@@ -170,7 +170,7 @@ public class TraceQueryService implements Service {
             span.setError(spanObject.getIsError());
             span.setLayer(spanObject.getSpanLayer().name());
             span.setType(spanObject.getSpanType().name());
-
+            span.setLwqCustomUser(segmentObject.getLwqCustomUser());
             String segmentSpanId = segmentObject.getTraceSegmentId() + Const.SEGMENT_SPAN_SPLIT + spanObject.getSpanId();
             span.setSegmentSpanId(segmentSpanId);
 

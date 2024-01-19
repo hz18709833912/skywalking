@@ -26,4 +26,8 @@ public abstract class Source implements ISource {
     @Getter
     @Setter
     private long timeBucket;
+
+    @Setter
+    @Getter
+    private String lwqCustomUser;
 }

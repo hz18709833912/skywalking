@@ -63,6 +63,8 @@ public class Span {
     @Setter
     private String segmentParentSpanId;
     private final List<SpanAttachedEvent> attachedEvents;
+    @Setter
+    private String lwqCustomUser;
 
     public Span() {
         this.refs = new ArrayList<>();

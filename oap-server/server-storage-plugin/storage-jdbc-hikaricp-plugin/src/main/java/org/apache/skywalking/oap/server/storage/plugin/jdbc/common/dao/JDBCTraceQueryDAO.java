@@ -73,7 +73,8 @@ public class JDBCTraceQueryDAO implements ITraceQueryDAO {
         SegmentRecord.START_TIME + ", " +
         SegmentRecord.LATENCY + ", " +
         SegmentRecord.IS_ERROR + ", " +
-        SegmentRecord.DATA_BINARY;
+        SegmentRecord.DATA_BINARY+ ", " +
+            SegmentRecord.LWQ_CUSTOM_USER;
 
     @Override
     @SneakyThrows
@@ -321,6 +322,7 @@ public class JDBCTraceQueryDAO implements ITraceQueryDAO {
             segmentRecord.setStartTime(resultSet.getLong(SegmentRecord.START_TIME));
             segmentRecord.setLatency(resultSet.getInt(SegmentRecord.LATENCY));
             segmentRecord.setIsError(resultSet.getInt(SegmentRecord.IS_ERROR));
+            segmentRecord.setLwqCustomUser(resultSet.getString(SegmentRecord.LWQ_CUSTOM_USER));
             String dataBinaryBase64 = resultSet.getString(SegmentRecord.DATA_BINARY);
             if (!Strings.isNullOrEmpty(dataBinaryBase64)) {
                 segmentRecord.setDataBinary(Base64.getDecoder().decode(dataBinaryBase64));

@@ -19,7 +19,9 @@
 package org.apache.skywalking.oap.server.receiver.trace.provider.handler.v8.rest;
 
 import com.linecorp.armeria.server.annotation.Post;
+
 import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.skywalking.apm.network.common.v3.Commands;
 import org.apache.skywalking.apm.network.language.agent.v3.SegmentObject;
@@ -40,18 +42,18 @@ public class TraceSegmentReportHandler {
 
     public TraceSegmentReportHandler(ModuleManager moduleManager) {
         this.segmentParserService = moduleManager.find(AnalyzerModule.NAME)
-                                                 .provider()
-                                                 .getService(ISegmentParserService.class);
+                .provider()
+                .getService(ISegmentParserService.class);
         MetricsCreator metricsCreator = moduleManager.find(TelemetryModule.NAME)
-                                                     .provider()
-                                                     .getService(MetricsCreator.class);
+                .provider()
+                .getService(MetricsCreator.class);
         histogram = metricsCreator.createHistogramMetric(
-            "trace_in_latency", "The process latency of trace data",
-            new MetricsTag.Keys("protocol"), new MetricsTag.Values("http")
+                "trace_in_latency", "The process latency of trace data",
+                new MetricsTag.Keys("protocol"), new MetricsTag.Values("http")
         );
         errorCounter = metricsCreator.createCounter(
-            "trace_analysis_error_count", "The error number of trace analysis",
-            new MetricsTag.Keys("protocol"), new MetricsTag.Values("http")
+                "trace_analysis_error_count", "The error number of trace analysis",
+                new MetricsTag.Keys("protocol"), new MetricsTag.Values("http")
         );
     }
 

@@ -97,7 +97,7 @@ public class SegmentAnalysisListener implements FirstAnalysisListener, EntryAnal
         segment.setTimeBucket(timeBucket);
         segment.setIsError(BooleanUtils.booleanToValue(isError));
         segment.setDataBinary(segmentObject.toByteArray());
-
+        segment.setLwqCustomUser(segmentObject.getLwqCustomUser());
         endpointName = namingControl.formatEndpointName(serviceName, span.getOperationName());
         endpointId = IDManager.EndpointID.buildId(
             serviceId,
@@ -151,7 +151,7 @@ public class SegmentAnalysisListener implements FirstAnalysisListener, EntryAnal
         span.getTagsList().forEach(tag -> {
             if (searchableTagKeys.getSearchableTags().contains(tag.getKey())) {
                 final Tag spanTag = new Tag(tag.getKey(), tag.getValue());
-                if (tag.getValue().length()  > Tag.TAG_LENGTH || spanTag.toString().length() > Tag.TAG_LENGTH) {
+                if (tag.getValue().length() > Tag.TAG_LENGTH || spanTag.toString().length() > Tag.TAG_LENGTH) {
                     if (log.isDebugEnabled()) {
                         log.debug("Segment tag : {} length > : {}, dropped", spanTag, Tag.TAG_LENGTH);
                     }
@@ -209,27 +209,27 @@ public class SegmentAnalysisListener implements FirstAnalysisListener, EntryAnal
         public Factory(ModuleManager moduleManager, AnalyzerModuleConfig config) {
             this.sourceReceiver = moduleManager.find(CoreModule.NAME).provider().getService(SourceReceiver.class);
             final ConfigService configService = moduleManager.find(CoreModule.NAME)
-                                                             .provider()
-                                                             .getService(ConfigService.class);
+                    .provider()
+                    .getService(ConfigService.class);
             this.searchTagKeys = configService.getSearchableTracesTags();
             this.sampler = new TraceSegmentSampler(config.getTraceSamplingPolicyWatcher());
             this.forceSampleErrorSegment = config.isForceSampleErrorSegment();
             this.namingControl = moduleManager.find(CoreModule.NAME)
-                                              .provider()
-                                              .getService(NamingControl.class);
+                    .provider()
+                    .getService(NamingControl.class);
             this.segmentStatusAnalyzer = SegmentStatusStrategy.findByName(config.getSegmentStatusAnalysisStrategy())
-                                                              .getExceptionAnalyzer();
+                    .getExceptionAnalyzer();
         }
 
         @Override
         public AnalysisListener create(ModuleManager moduleManager, AnalyzerModuleConfig config) {
             return new SegmentAnalysisListener(
-                sourceReceiver,
-                sampler,
-                forceSampleErrorSegment,
-                namingControl,
-                searchTagKeys,
-                segmentStatusAnalyzer
+                    sourceReceiver,
+                    sampler,
+                    forceSampleErrorSegment,
+                    namingControl,
+                    searchTagKeys,
+                    segmentStatusAnalyzer
             );
         }
     }
